@@ -111,12 +111,15 @@ def function_handler(request):
       bucket_name = request_json['bucket']
     else:
       bucket_name = 'image-processing'
+    if request_json and 'blob_name':
+      blob_name = request_json['blob_name']
+    else:
+      blob_name = "cat.png"
     
     storage_client = storage.Client()
     bucket = storage_client.get_bucket(bucket_name)
     print(bucket)
 
-    blob_name = list_blobs(bucket)
     blob = bucket.blob(blob_name)
     
     download_path = "/tmp/" + blob_name
